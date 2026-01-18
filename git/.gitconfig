@@ -1,0 +1,40 @@
+[user]
+    # Update these with your actual name and email
+    name = Your Name
+    email = your.email@example.com
+
+[core]
+    editor = code --wait
+    autocrlf = input
+    excludesfile = ~/.gitignore_global
+
+[init]
+    defaultBranch = main
+
+[push]
+    default = simple
+    autoSetupRemote = true
+
+[pull]
+    rebase = false
+
+[color]
+    ui = auto
+
+[alias]
+    # Common aliases
+    st = status
+    co = checkout
+    br = branch
+    ci = commit
+    unstage = reset HEAD --
+    last = log -1 HEAD
+    visual = !code
+    lg = log --color --graph --pretty=format:'%C(bold red)%h%C(reset) - %C(bold green)(%ar)%C(reset) %s %C(bold blue)(%an)%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --all
+    ll = log --pretty=format:'%h - %an, %ar : %s' --graph
+
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true

@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    // Add your MCP server configurations here
+    // Example:
+    // "filesystem": {
+    //   "command": "node",
+    //   "args": ["path/to/mcp-server.js"],
+    //   "env": {}
+    // }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "editor": {
+    // Editor preferences for CLI/Agent mode
+    "vimMode": false
+  },
+  "permissions": {
+    // Commands allowed by Cursor agents
+    "allow": [
+      "npm",
+      "node",
+      "git"
+    ],
+    // Commands denied by Cursor agents (optional)
+    "deny": []
+  },
+  "agent": {
+    // Default agent mode: "ask", "plan", or "auto"
+    "defaultMode": "ask"
+  }
+}

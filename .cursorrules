@@ -1,0 +1,36 @@
+# Cursor Rules for Dotfiles Repository
+
+This repository contains personal dotfiles configuration. When editing these files:
+
+## General Principles
+
+- Maintain Windows 11 Pro compatibility
+- Use symlinks, not copies of configuration files
+- Keep configuration files well-commented and organized
+- Preserve existing functionality when making changes
+
+## Configuration Files
+
+- **Cursor configs**: Located in `cursor/` directory
+- **Shell configs**: PowerShell profiles in `powershell/`
+- **Git configs**: In `git/` directory
+- **npm configs**: In `npm/` directory
+- **Terminal configs**: Windows Terminal in `windows-terminal/`
+
+## Installation Script
+
+- The `scripts/install.ps1` script manages symlink creation
+- When adding new configs, update both the script and README
+- Ensure paths are correct for Windows environment variables
+
+## Documentation
+
+- Always update README.md when adding new configs or changing structure
+- Document any non-obvious configuration choices
+- Keep the Key Paths Reference table up to date
+
+## Testing
+
+- Test installer script changes before committing
+- Verify symlinks work correctly after changes
+- Ensure configs load properly in their respective applications
