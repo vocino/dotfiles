@@ -37,6 +37,20 @@ function reload {
     . $PROFILE
 }
 
+# Open Cursor in current directory
+function cursor {
+    if (Get-Command cursor -ErrorAction SilentlyContinue) {
+        cursor .
+    } else {
+        Write-Host "Cursor CLI not found. Install from https://cursor.sh" -ForegroundColor Yellow
+    }
+}
+
+# Quick git status check (useful before Cursor agent operations)
+function gstc {
+    git status --short
+}
+
 # Show current directory path in title
 function Set-Title {
     $host.ui.RawUI.WindowTitle = "PowerShell - $(Get-Location)"

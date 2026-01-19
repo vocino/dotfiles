@@ -3,6 +3,7 @@
   "workbench.colorTheme": "Dracula",
   
   // Editor settings
+  // Fira Code font with ligatures - https://github.com/tonsky/FiraCode
   "editor.fontFamily": "'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', monospace",
   "editor.fontLigatures": true,
   "editor.fontSize": 14,
@@ -22,10 +23,30 @@
   "files.exclude": {
     "**/.git": true,
     "**/.DS_Store": true,
-    "**/node_modules": true
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/.nuxt": true,
+    "**/.turbo": true,
+    "**/.vercel": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/out": true
   },
   
-  // Terminal settings
+  // Search exclusions (for better performance)
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.next": true,
+    "**/.nuxt": true,
+    "**/.turbo": true,
+    "**/coverage": true,
+    "**/*.min.js": true,
+    "**/*.min.css": true
+  },
+  
+  // Terminal settings (Fira Code with ligatures)
   "terminal.integrated.fontFamily": "'Fira Code', 'Cascadia Code', 'Consolas', monospace",
   "terminal.integrated.fontSize": 14,
   "terminal.integrated.defaultProfile.windows": "PowerShell",
