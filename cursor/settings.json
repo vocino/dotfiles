@@ -4,7 +4,7 @@
 
   // Editor settings
   // Fira Code font with ligatures - https://github.com/tonsky/FiraCode
-  "editor.fontFamily": "'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', monospace",
+  "editor.fontFamily": "'Fira Code'",
   "editor.fontLigatures": true,
   "editor.fontSize": 14,
   "editor.lineHeight": 1.6,
