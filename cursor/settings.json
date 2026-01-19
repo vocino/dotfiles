@@ -1,7 +1,7 @@
 {
   // Dracula Theme
-  "workbench.colorTheme": "Dracula",
-  
+  "workbench.colorTheme": "Dracula Theme (Classic)",
+
   // Editor settings
   // Fira Code font with ligatures - https://github.com/tonsky/FiraCode
   "editor.fontFamily": "'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', monospace",
@@ -14,7 +14,7 @@
   "editor.minimap.enabled": true,
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": true,
-  
+
   // File settings
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 1000,
@@ -32,7 +32,7 @@
     "**/build": true,
     "**/out": true
   },
-  
+
   // Search exclusions (for better performance)
   "search.exclude": {
     "**/node_modules": true,
@@ -45,12 +45,12 @@
     "**/*.min.js": true,
     "**/*.min.css": true
   },
-  
+
   // Terminal settings (Fira Code with ligatures)
   "terminal.integrated.fontFamily": "'Fira Code', 'Cascadia Code', 'Consolas', monospace",
   "terminal.integrated.fontSize": 14,
   "terminal.integrated.defaultProfile.windows": "PowerShell",
-  
+
   // Git settings
   "git.enableSmartCommit": true,
   "git.confirmSync": false,
