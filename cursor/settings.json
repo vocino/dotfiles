@@ -14,6 +14,8 @@
   "editor.minimap.enabled": true,
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": true,
+  // UI font for non-editor surfaces (e.g. sidebar, panels, agent view)
+  "workbench.fontFamily": "'Fira Sans'",
 
   // File settings
   "files.autoSave": "afterDelay",
@@ -47,7 +49,7 @@
   },
 
   // Terminal settings (Fira Code with ligatures)
-  "terminal.integrated.fontFamily": "'Fira Code', 'Cascadia Code', 'Consolas', monospace",
+  "terminal.integrated.fontFamily": "'Fira Code'",
   "terminal.integrated.fontSize": 14,
   "terminal.integrated.defaultProfile.windows": "PowerShell",
 

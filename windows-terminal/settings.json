@@ -1,51 +1,80 @@
 {
-  "$schema": "https://aka.ms/terminal-profiles-schema",
-  "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-  "profiles": {
-    "defaults": {
-      "font": {
-        "face": "Fira Code",
-        "size": 14
-      },
-      "colorScheme": "Dracula",
-      "antialiasingMode": "grayscale"
-    },
-    "list": [
-      {
-        "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-        "name": "PowerShell",
-        "commandline": "pwsh.exe",
-        "hidden": false,
-        "colorScheme": "Dracula",
-        "font": {
-          "face": "Fira Code",
-          "size": 14
+    "$help": "https://aka.ms/terminal-documentation",
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "actions": [],
+    "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+    "keybindings": [],
+    "newTabMenu": 
+    [
+        {
+            "type": "remainingProfiles"
         }
-      }
-    ]
-  },
-  "schemes": [
+    ],
+    "profiles": 
     {
-      "name": "Dracula",
-      "background": "#282936",
-      "black": "#282936",
-      "blue": "#62d6e8",
-      "brightBlack": "#626483",
-      "brightBlue": "#62d6e8",
-      "brightCyan": "#a1efe4",
-      "brightGreen": "#ebff87",
-      "brightPurple": "#b45bcf",
-      "brightRed": "#ea51b2",
-      "brightWhite": "#e9e9f4",
-      "brightYellow": "#00f769",
-      "cyan": "#a1efe4",
-      "foreground": "#e9e9f4",
-      "green": "#ebff87",
-      "purple": "#b45bcf",
-      "red": "#ea51b2",
-      "white": "#e9e9f4",
-      "yellow": "#00f769"
-    }
-  ],
-  "theme": "dark"
+        "defaults": 
+        {
+            "antialiasingMode": "grayscale",
+            "colorScheme": "Dracula",
+            "font": 
+            {
+                "face": "Fira Code",
+                "size": 14
+            }
+        },
+        "list": 
+        [
+            {
+                "colorScheme": "Dracula",
+                "commandline": "pwsh.exe",
+                "font": 
+                {
+                    "face": "Fira Code",
+                    "size": 14
+                },
+                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+                "hidden": false,
+                "name": "PowerShell"
+            },
+            {
+                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "hidden": false,
+                "name": "Command Prompt"
+            },
+            {
+                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+                "hidden": false,
+                "name": "Azure Cloud Shell",
+                "source": "Windows.Terminal.Azure"
+            }
+        ]
+    },
+    "schemes": 
+    [
+        {
+            "background": "#282936",
+            "black": "#282936",
+            "blue": "#62D6E8",
+            "brightBlack": "#626483",
+            "brightBlue": "#62D6E8",
+            "brightCyan": "#A1EFE4",
+            "brightGreen": "#EBFF87",
+            "brightPurple": "#B45BCF",
+            "brightRed": "#EA51B2",
+            "brightWhite": "#E9E9F4",
+            "brightYellow": "#00F769",
+            "cursorColor": "#FFFFFF",
+            "cyan": "#A1EFE4",
+            "foreground": "#E9E9F4",
+            "green": "#EBFF87",
+            "name": "Dracula",
+            "purple": "#B45BCF",
+            "red": "#EA51B2",
+            "selectionBackground": "#FFFFFF",
+            "white": "#E9E9F4",
+            "yellow": "#00F769"
+        }
+    ],
+    "theme": "dark",
+    "themes": []
 }
