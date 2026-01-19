@@ -29,7 +29,7 @@
 param(
     [Parameter(Mandatory=$false)]
     [string[]]$Only,
-    
+
     [Parameter(Mandatory=$false)]
     [switch]$Force
 )
@@ -115,11 +115,11 @@ $SymlinkMappings = @{
 # Function to check if path is a symlink
 function Test-Symlink {
     param([string]$Path)
-    
+
     if (-not (Test-Path $Path)) {
         return $false
     }
-    
+
     $item = Get-Item $Path -Force
     return ($item.LinkType -eq "SymbolicLink")
 }
@@ -131,20 +131,20 @@ function New-Symlink {
         [string]$Target,
         [string]$Type
     )
-    
+
     # Check if source exists
     if (-not (Test-Path $Source)) {
         Write-Warning "Source does not exist: $Source (skipping)"
         return $false
     }
-    
+
     # Get parent directory of target
     $TargetParent = Split-Path -Parent $Target
     if (-not (Test-Path $TargetParent)) {
         Write-Host "Creating directory: $TargetParent" -ForegroundColor Yellow
         New-Item -ItemType Directory -Path $TargetParent -Force | Out-Null
     }
-    
+
     # Check if target already exists
     if (Test-Path $Target) {
         if (Test-Symlink -Path $Target) {
@@ -173,7 +173,7 @@ function New-Symlink {
             Remove-Item $Target -Force
         }
     }
-    
+
     # Create symlink
     try {
         if ($Type -eq "Directory") {
@@ -202,12 +202,20 @@ $configsToInstall = if ($Only) {
     $SymlinkMappings.Keys
 }
 
-# Filter out WSL if directory doesn't exist
+# Filter out WSL if directory or config files don't exist
 if ("wsl" -in $configsToInstall) {
     $wslPath = Join-Path $RepoRoot "wsl"
     if (-not (Test-Path $wslPath)) {
         Write-Host "WSL directory not found, skipping WSL configs" -ForegroundColor Yellow
         $configsToInstall = $configsToInstall | Where-Object { $_ -ne "wsl" }
+    } else {
+        # Check if any WSL config files actually exist
+        $wslMappings = $SymlinkMappings["wsl"]
+        $hasWslConfigs = $wslMappings | Where-Object { Test-Path $_.Source }
+        if (-not $hasWslConfigs) {
+            Write-Host "WSL directory exists but no config files found, skipping WSL configs" -ForegroundColor Yellow
+            $configsToInstall = $configsToInstall | Where-Object { $_ -ne "wsl" }
+        }
     }
 }
 
@@ -219,19 +227,19 @@ foreach ($config in $configsToInstall) {
         Write-Warning "Unknown configuration: $config (skipping)"
         continue
     }
-    
+
     Write-Host "Installing $config configuration..." -ForegroundColor Yellow
-    
+
     $mappings = $SymlinkMappings[$config]
     $requiresAdmin = $mappings | Where-Object { $_.RequiresAdmin -eq $true }
-    
+
     if ($requiresAdmin) {
         $isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
         if (-not $isAdmin) {
             Write-Warning "Administrator privileges may be required for $config configuration"
         }
     }
-    
+
     foreach ($mapping in $mappings) {
         if (New-Symlink -Source $mapping.Source -Target $mapping.Target -Type $mapping.Type) {
             $successCount++
@@ -239,7 +247,7 @@ foreach ($config in $configsToInstall) {
             $failureCount++
         }
     }
-    
+
     Write-Host ""
 }
 
