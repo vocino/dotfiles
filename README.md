@@ -73,6 +73,20 @@ The installer will:
 - **npm**: Global npm configuration (registry, auth, proxy settings)
 - **Secrets Management**: Service-organized dotenv files with automatic shell loading and Windows user env sync
 
+### MCP Servers (Cursor)
+
+Cursor reads MCP config from `cursor/mcp.json` (symlinked to `%USERPROFILE%\.cursor\mcp.json`). This repo configures:
+
+| Server | Type | Purpose |
+|--------|------|---------|
+| **openai-docs** | HTTP | Read-only OpenAI developer docs (API, SDK, etc.) — [docs](https://platform.openai.com/docs/docs-mcp) |
+| **fetch** | stdio (npx) | Fetch URLs and extract content as markdown for LLM context |
+| **filesystem** | stdio (npx) | Read/write files under a configurable directory |
+
+**Customize**: Edit `cursor/mcp.json`. For **filesystem**, set the `args` path to your allowed directory (e.g. `C:\Users\YourName` or a project root). Use double backslashes in JSON.
+
+**More servers**: [MCP Registry](https://registry.modelcontextprotocol.io), [modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers) (Git, Brave Search, etc.). Use `url` for HTTP servers, `command`/`args` for stdio. Restart Cursor after changes.
+
 ## Theming
 
 All applications are configured to use the [Dracula Theme](https://github.com/dracula/dracula-theme) where available. Dracula is a dark theme available for 400+ applications, providing a consistent, accessible color scheme across the entire development environment.

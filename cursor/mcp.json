@@ -1,11 +1,19 @@
 {
   "mcpServers": {
-    // Add your MCP server configurations here
-    // Example:
-    // "filesystem": {
-    //   "command": "node",
-    //   "args": ["path/to/mcp-server.js"],
-    //   "env": {}
-    // }
+    "openai-docs": {
+      "url": "https://developers.openai.com/mcp"
+    },
+    "fetch": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-fetch"]
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "C:\\Users\\vocino"
+      ]
+    }
   }
 }
