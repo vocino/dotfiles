@@ -41,7 +41,12 @@ dotfiles/
 ├── wsl/                 # WSL-specific configs (if used)
 │   └── .bashrc
 ├── scripts/             # Installation and utility scripts
-│   └── install.ps1      # Main bootstrap script
+│   ├── install.ps1      # Main bootstrap script
+│   └── sync-secrets.ps1 # Sync secrets to Windows user environment
+├── secrets/             # Local secrets (git-ignored)
+│   ├── .env.cloudflare.example  # Cloudflare API template
+│   ├── .env.github.example      # GitHub token template
+│   └── .env.*           # Your actual secrets (not in git)
 └── .cursorrules         # Rules for editing THIS repo
 ```
 
@@ -63,9 +68,10 @@ The installer will:
 ## What Gets Configured
 
 - **Cursor IDE**: Settings, MCP servers, keybindings, CLI config, snippets, global rules
-- **PowerShell**: Custom profile with aliases and functions
+- **PowerShell**: Custom profile with aliases, functions, and automatic secrets loading
 - **Git**: Global config, aliases, ignore patterns
 - **npm**: Global npm configuration (registry, auth, proxy settings)
+- **Secrets Management**: Service-organized dotenv files with automatic shell loading and Windows user env sync
 
 ## Theming
 
@@ -101,6 +107,133 @@ After making changes to config files in this repo:
 ```
 
 Since configs are symlinked, edits in either location (repo or system) are immediately reflected in both. No reinstall needed for content changes.
+
+## Secrets (.env)
+
+This repository includes a secure secrets management system that keeps tokens and API keys out of version control while making them available to your development tools and applications.
+
+### Organization
+
+Secrets are organized by service using separate `.env.*` files in the `secrets/` directory:
+
+- **Service-based organization**: Each service gets its own file (e.g., `.env.cloudflare`, `.env.github`, `.env.aws`)
+- **Related credentials together**: All credentials for a service are kept in one place
+- **Easy to manage**: Add or remove services without affecting others
+- **Git-ignored**: All `.env.*` files (except `.example` templates) are ignored by git
+
+### Setup
+
+1. **Copy example files** to create your local secret files:
+   ```powershell
+   Copy-Item secrets\.env.cloudflare.example secrets\.env.cloudflare
+   Copy-Item secrets\.env.github.example secrets\.env.github
+   ```
+
+2. **Add your actual values** to the `.env.*` files:
+   ```powershell
+   # Edit with your preferred editor
+   code secrets\.env.cloudflare
+   # or
+   notepad secrets\.env.cloudflare
+   ```
+
+3. **Format**: Each file uses standard dotenv format:
+   ```
+   CLOUDFLARE_ACCOUNT_ID=your_actual_account_id
+   CLOUDFLARE_API_TOKEN=your_actual_token
+   ```
+
+### How Secrets Are Loaded
+
+#### PowerShell Shell Sessions
+
+The PowerShell profile automatically loads all `.env.*` files from `secrets/` on every shell startup. This means:
+
+- **CLI tools** (git, npm, wrangler, etc.) launched from PowerShell have access
+- **Terminal-based workflows** automatically get the environment variables
+- **No manual loading required** - it happens automatically
+
+#### GUI Applications (Cursor, VS Code, etc.)
+
+GUI applications need secrets in the Windows user environment variables. Use the sync script:
+
+```powershell
+# Preview what will be synced (dry run)
+.\scripts\sync-secrets.ps1 -WhatIf
+
+# Actually sync secrets to Windows user environment
+.\scripts\sync-secrets.ps1
+```
+
+**Important**: After syncing, **restart the application** (e.g., Cursor) to pick up the new environment variables.
+
+### Using Secrets in Cursor
+
+Cursor can access secrets in several ways:
+
+1. **Environment Variables** (recommended for GUI):
+   - Run `.\scripts\sync-secrets.ps1` to sync secrets to Windows user env
+   - Restart Cursor
+   - Cursor's terminal, agents, and code can now access `$env:CLOUDFLARE_API_TOKEN`, etc.
+
+2. **Terminal Commands in Cursor**:
+   - If you launch Cursor from PowerShell (e.g., `cursor .`), it inherits the shell's environment
+   - The PowerShell profile loads secrets automatically
+
+3. **Agent Operations**:
+   - When Cursor agents run terminal commands, they use the environment variables
+   - Commands like `curl` with API tokens work seamlessly
+
+**Example**: Using Cloudflare API token in Cursor:
+```powershell
+# In Cursor's terminal or agent commands:
+curl "https://api.cloudflare.com/client/v4/accounts/$env:CLOUDFLARE_ACCOUNT_ID/tokens/verify" `
+  -H "Authorization: Bearer $env:CLOUDFLARE_API_TOKEN"
+```
+
+### Adding New Services
+
+To add secrets for a new service:
+
+1. **Create an example file**:
+   ```powershell
+   # Create secrets\.env.newservice.example
+   @"
+   # NewService API Configuration
+   NEWSERVICE_API_KEY=your_api_key_here
+   NEWSERVICE_SECRET=your_secret_here
+   "@ | Out-File -FilePath secrets\.env.newservice.example -Encoding utf8
+   ```
+
+2. **Copy and fill in values**:
+   ```powershell
+   Copy-Item secrets\.env.newservice.example secrets\.env.newservice
+   # Edit secrets\.env.newservice with your actual values
+   ```
+
+3. **Add to sync allowlist** (if you want it synced to Windows user env):
+   ```powershell
+   # Edit scripts\sync-secrets.ps1
+   # Add "NEWSERVICE_API_KEY", "NEWSERVICE_SECRET" to the $AllowList array
+   ```
+
+4. **The PowerShell profile automatically loads it** - no changes needed!
+
+### Managing Secrets
+
+- **Update a secret**: Edit the appropriate `.env.*` file, then run `.\scripts\sync-secrets.ps1` if it's synced to user env
+- **Add a new service**: Create `.env.servicename` file - it's automatically loaded
+- **Remove a service**: Delete the `.env.*` file and remove from sync allowlist if needed
+- **View loaded secrets**: In PowerShell, run `Get-ChildItem Env: | Where-Object { $_.Name -like "*CLOUDFLARE*" -or $_.Name -like "*GITHUB*" }`
+
+### Security Notes
+
+- ✅ All `.env.*` files are git-ignored (never committed)
+- ✅ Only `.example` template files are tracked in git
+- ✅ Secrets are stored locally on your machine
+- ✅ Sync script only writes to Windows user environment (not system-wide)
+- ⚠️ Keep your `secrets/` directory secure and don't share it
+- ⚠️ Rotate tokens if they're ever exposed or shared
 
 ## Adding New Configs
 
@@ -164,5 +297,7 @@ Get-Item $env:USERPROFILE\.gitconfig | Select-Object LinkType, Target
 | Git Config | `%USERPROFILE%\.gitconfig` |
 | npm Config | `%USERPROFILE%\.npmrc` |
 | Windows Terminal | `%LOCALAPPDATA%\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json` |
+| Secrets Directory | `%USERPROFILE%\dotfiles\secrets\` |
+| Secrets Examples | `%USERPROFILE%\dotfiles\secrets\.env.*.example` |
 
 **Note**: These paths are where symlinks are created. The actual config files remain in this repository.

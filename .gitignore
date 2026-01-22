@@ -20,7 +20,8 @@ desktop.ini
 *.key
 *.pem
 *.env
-secrets/
+secrets/*
+!secrets/.env.*.example
 
 # Windows Terminal settings (optional - if you don't want to track)
 # windows-terminal/settings.json

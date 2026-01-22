@@ -4,6 +4,48 @@
 # Set encoding to UTF-8
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
+# Load secrets from local dotenv files (ignored by git)
+$DotfilesRoot = Join-Path $env:USERPROFILE "dotfiles"
+$SecretsDir = Join-Path $DotfilesRoot "secrets"
+
+function Import-Dotenv {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$Path
+    )
+
+    if (-not (Test-Path $Path)) {
+        Write-Verbose "Dotenv file not found: $Path"
+        return
+    }
+
+    foreach ($line in Get-Content -Path $Path) {
+        $trimmed = $line.Trim()
+        if ($trimmed.Length -eq 0 -or $trimmed.StartsWith("#")) {
+            continue
+        }
+
+        if ($trimmed -match '^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)\s*$') {
+            $key = $matches[1]
+            $value = $matches[2].Trim()
+            if (($value.StartsWith('"') -and $value.EndsWith('"')) -or ($value.StartsWith("'") -and $value.EndsWith("'"))) {
+                $value = $value.Substring(1, $value.Length - 2)
+            }
+            Set-Item -Path "Env:$key" -Value $value
+        }
+    }
+}
+
+# Load all .env.* files from secrets directory (excluding .example files)
+if (Test-Path $SecretsDir) {
+    Get-ChildItem -Path $SecretsDir -Filter ".env.*" -File | Where-Object {
+        -not $_.Name.EndsWith(".example")
+    } | ForEach-Object {
+        Import-Dotenv -Path $_.FullName
+    }
+}
+
 # Common aliases
 Set-Alias -Name ll -Value Get-ChildItem
 Set-Alias -Name la -Value Get-ChildItem
