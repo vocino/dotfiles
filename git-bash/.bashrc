@@ -71,13 +71,22 @@ cursor() {
     fi
 }
 
-# Custom prompt: path (or ~ when in HOME) in color, then " > "
+# Custom prompt: path with ~ for home prefix, optional git branch, $ on next line
 set_prompt() {
     local current_path="$PWD"
-    if [[ "$current_path" == "$HOME" || "$current_path" == "$USERPROFILE" ]]; then
+    # Use HOME for shortening (Git Bash usually sets it to Unix-style, e.g. /c/Users/you)
+    local home="${HOME:-$USERPROFILE}"
+    if [[ "$current_path" == "$home" ]]; then
         current_path="~"
+    elif [[ "$current_path" == "$home"/* ]]; then
+        current_path="~${current_path#$home}"
     fi
-    # Cyan for path (Git Bash supports \033[36m)
-    PS1='\[\033[36m\]'"$current_path"'\[\033[0m\] > '
+    local branch=""
+    if command -v git &>/dev/null && git rev-parse --is-inside-work-tree &>/dev/null; then
+        branch=$(git branch --show-current 2>/dev/null)
+        [[ -n "$branch" ]] && branch=" $branch"
+    fi
+    # Cyan path, green branch; $ on next line (Git Bash supports \033[36m, \033[32m)
+    PS1='\[\033[36m\]'"$current_path"'\[\033[32m\]'"$branch"'\[\033[0m\]\n$ '
 }
 PROMPT_COMMAND='set_prompt'
