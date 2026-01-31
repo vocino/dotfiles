@@ -1,0 +1,4 @@
+# Readline config for Git Bash (symlinked from ~/dotfiles/git-bash/.inputrc)
+
+set completion-ignore-case on
+set show-all-if-ambiguous on

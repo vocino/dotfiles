@@ -7,7 +7,7 @@
     repository. It supports selective installation and can be run multiple times safely.
 
 .PARAMETER Only
-    Install only specific configurations. Options: cursor, powershell, git, npm, windows-terminal, wsl
+    Install only specific configurations. Options: cursor, powershell, git-bash, git, npm, windows-terminal, wsl
 
 .PARAMETER Force
     Overwrite existing files without prompting.
@@ -101,6 +101,23 @@ $SymlinkMappings = @{
             Target = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
             Type = "File"
             RequiresAdmin = $true
+        }
+    )
+    "git-bash" = @(
+        @{
+            Source = Join-Path $RepoRoot "git-bash\.bashrc"
+            Target = "$env:USERPROFILE\.bashrc"
+            Type = "File"
+        },
+        @{
+            Source = Join-Path $RepoRoot "git-bash\.bash_profile"
+            Target = "$env:USERPROFILE\.bash_profile"
+            Type = "File"
+        },
+        @{
+            Source = Join-Path $RepoRoot "git-bash\.inputrc"
+            Target = "$env:USERPROFILE\.inputrc"
+            Type = "File"
         }
     )
     "wsl" = @(
@@ -200,6 +217,22 @@ $configsToInstall = if ($Only) {
     $Only
 } else {
     $SymlinkMappings.Keys
+}
+
+# Filter out git-bash if directory or config files don't exist
+if ("git-bash" -in $configsToInstall) {
+    $gitBashPath = Join-Path $RepoRoot "git-bash"
+    if (-not (Test-Path $gitBashPath)) {
+        Write-Host "git-bash directory not found, skipping Git Bash configs" -ForegroundColor Yellow
+        $configsToInstall = $configsToInstall | Where-Object { $_ -ne "git-bash" }
+    } else {
+        $gitBashMappings = $SymlinkMappings["git-bash"]
+        $hasGitBashConfigs = $gitBashMappings | Where-Object { Test-Path $_.Source }
+        if (-not $hasGitBashConfigs) {
+            Write-Host "git-bash directory exists but no config files found, skipping Git Bash configs" -ForegroundColor Yellow
+            $configsToInstall = $configsToInstall | Where-Object { $_ -ne "git-bash" }
+        }
+    }
 }
 
 # Filter out WSL if directory or config files don't exist

@@ -31,6 +31,10 @@ dotfiles/
 │   └── rules/           # Global cursor rules
 ├── powershell/          # PowerShell profile and modules
 │   └── profile.ps1
+├── git-bash/            # Git Bash profile (Cursor default terminal)
+│   ├── .bashrc          # Main profile: secrets, aliases, prompt
+│   ├── .bash_profile    # Login shell: sources .bashrc
+│   └── .inputrc         # Readline settings
 ├── git/                 # Git configuration
 │   ├── .gitconfig
 │   └── .gitignore_global
@@ -61,14 +65,20 @@ cd ~/dotfiles
 .\scripts\install.ps1
 ```
 
+From Git Bash you can run the installer with:
+```bash
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File ~/dotfiles/scripts/install.ps1
+```
+
 The installer will:
 1. Create symbolic links from system paths to files in this repo
 2. Ask for confirmation before overwriting existing files (unless using `-Force`)
 
 ## What Gets Configured
 
-- **Cursor IDE**: Settings, MCP servers, keybindings, CLI config, snippets, global rules
-- **PowerShell**: Custom profile with aliases, functions, and automatic secrets loading
+- **Cursor IDE**: Settings, MCP servers, keybindings, CLI config, snippets, global rules. Cursor's default terminal is **Git Bash**.
+- **Git Bash**: Custom profile (aliases, git/npm shortcuts, secrets loading, prompt). Used by Cursor's integrated terminal.
+- **PowerShell**: Custom profile with aliases, functions, and automatic secrets loading (used when running PowerShell elsewhere, e.g. Windows Terminal).
 - **Git**: Global config, aliases, ignore patterns
 - **npm**: Global npm configuration (registry, auth, proxy settings)
 - **Secrets Management**: Service-organized dotenv files with automatic shell loading and Windows user env sync
@@ -106,7 +116,7 @@ Installation instructions for Dracula themes can be found at [draculatheme.com](
 .\scripts\install.ps1 -Force
 ```
 
-**Selective Install**: Use `-Only` to install specific configs. Available options: `cursor`, `powershell`, `git`, `npm`, `windows-terminal`, `wsl`.
+**Selective Install**: Use `-Only` to install specific configs. Available options: `cursor`, `powershell`, `git-bash`, `git`, `npm`, `windows-terminal`, `wsl`.
 
 ## Updating
 
@@ -167,6 +177,14 @@ The PowerShell profile automatically loads all `.env.*` files from `secrets/` on
 - **Terminal-based workflows** automatically get the environment variables
 - **No manual loading required** - it happens automatically
 
+#### Git Bash Shell Sessions
+
+The Git Bash profile (`.bashrc`) sources and exports all `secrets/.env.*` files (excluding `.example`) on every shell startup. Cursor's integrated terminal uses Git Bash, so:
+
+- **CLI tools** and Cursor's terminal get the same environment as PowerShell
+- **No manual loading required** - it happens when you open a new Git Bash tab in Cursor
+- **GUI applications** (Cursor itself, agents) still need secrets in the Windows user environment; use `sync-secrets.ps1` and restart the app
+
 #### GUI Applications (Cursor, VS Code, etc.)
 
 GUI applications need secrets in the Windows user environment variables. Use the sync script:
@@ -191,8 +209,8 @@ Cursor can access secrets in several ways:
    - Cursor's terminal, agents, and code can now access `$env:CLOUDFLARE_API_TOKEN`, etc.
 
 2. **Terminal Commands in Cursor**:
-   - If you launch Cursor from PowerShell (e.g., `cursor .`), it inherits the shell's environment
-   - The PowerShell profile loads secrets automatically
+   - Cursor's default terminal is Git Bash. The Git Bash profile loads secrets automatically on each new terminal.
+   - If you launch Cursor from PowerShell (e.g., `cursor .`), it inherits the shell's environment; the PowerShell profile loads secrets there too.
 
 3. **Agent Operations**:
    - When Cursor agents run terminal commands, they use the environment variables
@@ -231,7 +249,7 @@ To add secrets for a new service:
    # Add "NEWSERVICE_API_KEY", "NEWSERVICE_SECRET" to the $AllowList array
    ```
 
-4. **The PowerShell profile automatically loads it** - no changes needed!
+4. **The PowerShell and Git Bash profiles automatically load it** - no changes needed!
 
 ### Managing Secrets
 
@@ -252,8 +270,8 @@ To add secrets for a new service:
 ## Adding New Configs
 
 1. Add the config file to the appropriate directory
-2. Update `scripts/install.ps1` with the symlink mapping
-3. Document in this README
+2. Update `scripts/install.ps1` with the symlink mapping (and optional skip logic if the config is optional, e.g. like git-bash or wsl)
+3. Document in this README (structure, What Gets Configured, Key Paths Reference, and any secrets/verification steps)
 
 ## Verification
 
@@ -276,6 +294,8 @@ Get-Item $env:USERPROFILE\.gitconfig | Select-Object LinkType, Target
 - [ ] Windows Terminal uses new settings (if installed)
 
 ## Design Decisions
+
+**Cursor shell**: Cursor's default terminal is Git Bash (see `cursor/settings.json`). The Git Bash profile in `git-bash/` is used there. The PowerShell profile is kept for when you run PowerShell elsewhere (e.g. Windows Terminal or standalone).
 
 **Why Symlinks?**
 - Single source of truth: configs live in this repo
@@ -308,6 +328,9 @@ Get-Item $env:USERPROFILE\.gitconfig | Select-Object LinkType, Target
 | Cursor CLI Config | `%USERPROFILE%\.cursor\cli-config.json` |
 | Cursor Snippets | `%APPDATA%\Cursor\User\snippets\` |
 | PowerShell Profile | `%USERPROFILE%\Documents\PowerShell\Microsoft.PowerShell_profile.ps1` |
+| Git Bash rc | `%USERPROFILE%\.bashrc` |
+| Git Bash profile | `%USERPROFILE%\.bash_profile` |
+| Readline | `%USERPROFILE%\.inputrc` |
 | Git Config | `%USERPROFILE%\.gitconfig` |
 | npm Config | `%USERPROFILE%\.npmrc` |
 | Windows Terminal | `%LOCALAPPDATA%\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json` |

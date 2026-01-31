@@ -12,7 +12,7 @@ This repository contains personal dotfiles configuration. When editing these fil
 ## Configuration Files
 
 - **Cursor configs**: Located in `cursor/` directory
-- **Shell configs**: PowerShell profiles in `powershell/`
+- **Shell configs**: PowerShell in `powershell/`, Git Bash (bash) in `git-bash/`
 - **Git configs**: In `git/` directory
 - **npm configs**: In `npm/` directory
 - **Terminal configs**: Windows Terminal in `windows-terminal/`
