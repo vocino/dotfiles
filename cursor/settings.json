@@ -51,7 +51,7 @@
   // Terminal settings (Fira Code with ligatures)
   "terminal.integrated.fontFamily": "'Fira Code'",
   "terminal.integrated.fontSize": 14,
-  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
 
   // Git settings
   "git.enableSmartCommit": true,
