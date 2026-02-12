@@ -1,0 +1,236 @@
+[
+    // ========================================
+    // Terminal Enhancements
+    // ========================================
+    {
+        "key": "shift+enter",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "\u001b\r"
+        },
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+`",
+        "command": "workbench.action.terminal.toggleTerminal"
+    },
+    {
+        "key": "ctrl+shift+`",
+        "command": "workbench.action.terminal.new"
+    },
+
+    // ========================================
+    // Claude Code Workflow
+    // ========================================
+    {
+        "key": "ctrl+shift+l",
+        "command": "claude-vscode.sidebar.open"
+    },
+    {
+        "key": "ctrl+alt+enter",
+        "command": "workbench.action.chat.submit",
+        "when": "chatInputHasFocus"
+    },
+    {
+        "key": "ctrl+k ctrl+i",
+        "command": "editor.action.showHover",
+        "when": "editorTextFocus"
+    },
+
+    // ========================================
+    // File Navigation & Management
+    // ========================================
+    {
+        "key": "ctrl+p",
+        "command": "workbench.action.quickOpen"
+    },
+    {
+        "key": "ctrl+shift+p",
+        "command": "workbench.action.showCommands"
+    },
+    {
+        "key": "ctrl+shift+e",
+        "command": "workbench.view.explorer"
+    },
+    {
+        "key": "ctrl+shift+f",
+        "command": "workbench.view.search"
+    },
+    {
+        "key": "ctrl+shift+g",
+        "command": "workbench.view.scm"
+    },
+
+    // ========================================
+    // Git Operations (complement your bash aliases)
+    // ========================================
+    {
+        "key": "ctrl+shift+g g",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "git status\r"
+        },
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+k ctrl+d",
+        "command": "git.openChange",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+k ctrl+h",
+        "command": "git.viewHistory",
+        "when": "editorTextFocus"
+    },
+
+    // ========================================
+    // Editor Productivity
+    // ========================================
+    {
+        "key": "ctrl+d",
+        "command": "editor.action.addSelectionToNextFindMatch",
+        "when": "editorFocus"
+    },
+    {
+        "key": "ctrl+shift+d",
+        "command": "editor.action.copyLinesDownAction",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+up",
+        "command": "editor.action.moveLinesUpAction",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+down",
+        "command": "editor.action.moveLinesDownAction",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+k",
+        "command": "editor.action.deleteLines",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+/",
+        "command": "editor.action.commentLine",
+        "when": "editorTextFocus"
+    },
+
+    // ========================================
+    // Code Navigation
+    // ========================================
+    {
+        "key": "f12",
+        "command": "editor.action.revealDefinition",
+        "when": "editorHasDefinitionProvider && editorTextFocus"
+    },
+    {
+        "key": "shift+f12",
+        "command": "editor.action.goToReferences",
+        "when": "editorHasReferenceProvider && editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+o",
+        "command": "workbench.action.gotoSymbol"
+    },
+    {
+        "key": "ctrl+t",
+        "command": "workbench.action.showAllSymbols"
+    },
+    {
+        "key": "alt+left",
+        "command": "workbench.action.navigateBack"
+    },
+    {
+        "key": "alt+right",
+        "command": "workbench.action.navigateForward"
+    },
+
+    // ========================================
+    // Multi-Cursor & Selection
+    // ========================================
+    {
+        "key": "ctrl+alt+down",
+        "command": "editor.action.insertCursorBelow",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+alt+up",
+        "command": "editor.action.insertCursorAbove",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+l",
+        "command": "editor.action.selectHighlights",
+        "when": "editorFocus && !chatIsOpen"
+    },
+
+    // ========================================
+    // Search & Replace
+    // ========================================
+    {
+        "key": "ctrl+f",
+        "command": "actions.find",
+        "when": "editorFocus"
+    },
+    {
+        "key": "ctrl+h",
+        "command": "editor.action.startFindReplaceAction",
+        "when": "editorFocus"
+    },
+    {
+        "key": "ctrl+shift+h",
+        "command": "workbench.action.replaceInFiles"
+    },
+
+    // ========================================
+    // Split Editor
+    // ========================================
+    {
+        "key": "ctrl+\\",
+        "command": "workbench.action.splitEditor"
+    },
+    {
+        "key": "ctrl+w",
+        "command": "workbench.action.closeActiveEditor"
+    },
+    {
+        "key": "ctrl+k ctrl+w",
+        "command": "workbench.action.closeAllEditors"
+    },
+
+    // ========================================
+    // Panel Management
+    // ========================================
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.togglePanel"
+    },
+    {
+        "key": "ctrl+b",
+        "command": "workbench.action.toggleSidebarVisibility"
+    },
+
+    // ========================================
+    // Markdown Preview (for README editing)
+    // ========================================
+    {
+        "key": "ctrl+shift+v",
+        "command": "markdown.showPreview",
+        "when": "editorLangId == 'markdown'"
+    },
+    {
+        "key": "ctrl+k v",
+        "command": "markdown.showPreviewToSide",
+        "when": "editorLangId == 'markdown'"
+    },
+
+    // ========================================
+    // Zen Mode (Distraction-free coding)
+    // ========================================
+    {
+        "key": "ctrl+k z",
+        "command": "workbench.action.toggleZenMode"
+    }
+]

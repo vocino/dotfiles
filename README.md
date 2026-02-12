@@ -29,6 +29,10 @@ dotfiles/
 │   ├── cli-config.json  # Cursor CLI configuration (agent modes, permissions)
 │   ├── snippets/        # Custom code snippets (if used)
 │   └── rules/           # Global cursor rules
+├── vscode/              # VS Code configuration
+│   ├── settings.json    # VS Code settings
+│   ├── keybindings.json # Custom keyboard shortcuts
+│   └── snippets/        # Custom code snippets (if used)
 ├── powershell/          # PowerShell profile and modules
 │   └── profile.ps1
 ├── git-bash/            # Git Bash profile (Cursor default terminal)
@@ -76,6 +80,7 @@ The installer will:
 
 ## What Gets Configured
 
+- **VS Code**: Settings, keybindings, snippets
 - **Cursor IDE**: Settings, MCP servers, keybindings, CLI config, snippets, global rules. Cursor's default terminal is **Git Bash**.
 - **Git Bash**: Custom profile (aliases, git/npm shortcuts, secrets loading, prompt). Used by Cursor's integrated terminal.
 - **PowerShell**: Custom profile with aliases, functions, and automatic secrets loading (used when running PowerShell elsewhere, e.g. Windows Terminal).
@@ -92,8 +97,12 @@ Cursor reads MCP config from `cursor/mcp.json` (symlinked to `%USERPROFILE%\.cur
 | **openai-docs** | HTTP | Read-only OpenAI developer docs (API, SDK, etc.) — [docs](https://platform.openai.com/docs/docs-mcp) |
 | **fetch** | stdio (npx) | Fetch URLs and extract content as markdown for LLM context |
 | **filesystem** | stdio (npx) | Read/write files under a configurable directory |
+| **Cloudflare** | HTTP | Access Cloudflare APIs and services |
+| **github** | HTTP | Access GitHub APIs (requires GITHUB_MCP_TOKEN) |
 
 **Customize**: Edit `cursor/mcp.json`. For **filesystem**, set the `args` path to your allowed directory (e.g. `C:\Users\YourName` or a project root). Use double backslashes in JSON.
+
+**Tokens**: MCP servers that require authentication use environment variables (e.g., `${GITHUB_MCP_TOKEN}`). Add tokens to `secrets/.env.github` or other service files, run `.\scripts\sync-secrets.ps1`, then restart Cursor.
 
 **More servers**: [MCP Registry](https://registry.modelcontextprotocol.io), [modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers) (Git, Brave Search, etc.). Use `url` for HTTP servers, `command`/`args` for stdio. Restart Cursor after changes.
 
@@ -116,7 +125,7 @@ Installation instructions for Dracula themes can be found at [draculatheme.com](
 .\scripts\install.ps1 -Force
 ```
 
-**Selective Install**: Use `-Only` to install specific configs. Available options: `cursor`, `powershell`, `git-bash`, `git`, `npm`, `windows-terminal`, `wsl`.
+**Selective Install**: Use `-Only` to install specific configs. Available options: `vscode`, `cursor`, `powershell`, `git-bash`, `git`, `npm`, `windows-terminal`, `wsl`.
 
 ## Updating
 
@@ -157,14 +166,21 @@ Secrets are organized by service using separate `.env.*` files in the `secrets/`
    ```powershell
    # Edit with your preferred editor
    code secrets\.env.cloudflare
+   code secrets\.env.github
    # or
    notepad secrets\.env.cloudflare
+   notepad secrets\.env.github
    ```
 
 3. **Format**: Each file uses standard dotenv format:
    ```
+   # Example: secrets/.env.cloudflare
    CLOUDFLARE_ACCOUNT_ID=your_actual_account_id
    CLOUDFLARE_API_TOKEN=your_actual_token
+
+   # Example: secrets/.env.github
+   GITHUB_TOKEN=your_github_token_here
+   GITHUB_MCP_TOKEN=your_github_mcp_token_here
    ```
 
 ### How Secrets Are Loaded
@@ -327,6 +343,9 @@ Get-Item $env:USERPROFILE\.gitconfig | Select-Object LinkType, Target
 | Cursor MCP | `%USERPROFILE%\.cursor\mcp.json` |
 | Cursor CLI Config | `%USERPROFILE%\.cursor\cli-config.json` |
 | Cursor Snippets | `%APPDATA%\Cursor\User\snippets\` |
+| VS Code Settings | `%APPDATA%\Code\User\settings.json` |
+| VS Code Keybindings | `%APPDATA%\Code\User\keybindings.json` |
+| VS Code Snippets | `%APPDATA%\Code\User\snippets\` |
 | PowerShell Profile | `%USERPROFILE%\Documents\PowerShell\Microsoft.PowerShell_profile.ps1` |
 | Git Bash rc | `%USERPROFILE%\.bashrc` |
 | Git Bash profile | `%USERPROFILE%\.bash_profile` |

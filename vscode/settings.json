@@ -1,0 +1,38 @@
+{
+    // File Management
+    "files.autoSave": "afterDelay",
+    "explorer.confirmDelete": false,
+    "security.promptForLocalFileProtocolHandling": false,
+
+    // Terminal Configuration (aligned with dotfiles Git Bash setup)
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "terminal.integrated.profiles.windows": {
+        "Git Bash": {
+            "source": "Git Bash",
+            "icon": "terminal-bash"
+        },
+        "PowerShell": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell"
+        }
+    },
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "terminal.integrated.shellIntegration.enabled": true,
+    "terminal.integrated.enablePersistentSessions": true,
+    "terminal.integrated.sendKeybindingsToShell": true,
+
+    // Claude Code Settings
+    "claudeCode.useTerminal": true,
+    "claudeCode.selectedModel": "opus",
+    "claudeCode.initialPermissionMode": "plan",
+    "claudeCode.preferredLocation": "sidebar",
+    "claudeCode.autosave": true,
+    "claudeCode.useCtrlEnterToSend": true,
+    "claudeCode.respectGitIgnore": true,
+    "claudeCode.enableNewConversationShortcut": true,
+
+    // Flutter/Dart Configuration
+    "dart.flutterSdkPath": "C:\\Users\\vocino\\flutter",
+    "dart.openDevTools": "flutter",
+    "dart.devToolsBrowser": "default"
+}
