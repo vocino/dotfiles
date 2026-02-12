@@ -1,4 +1,7 @@
 {
+    // Theme (Dracula across all apps per dotfiles convention)
+    "workbench.colorTheme": "Dracula Theme",
+
     // File Management
     "files.autoSave": "afterDelay",
     "explorer.confirmDelete": false,
@@ -22,7 +25,7 @@
     "terminal.integrated.sendKeybindingsToShell": true,
 
     // Claude Code Settings
-    "claudeCode.useTerminal": true,
+    "claudeCode.useTerminal": false,
     "claudeCode.selectedModel": "opus",
     "claudeCode.initialPermissionMode": "plan",
     "claudeCode.preferredLocation": "sidebar",
