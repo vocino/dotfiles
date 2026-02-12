@@ -3,28 +3,30 @@
 Thumbs.db
 desktop.ini
 
-# Editor/IDE
+# Editor/IDE local settings
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
+# Claude Code (machine-specific local state)
+.claude/settings.local.json
+.context/
+
 # Temporary files
 *.tmp
 *.log
 *.bak
 *.cache
+*.orig
 
-# Personal/secrets (shouldn't be in configs, but just in case)
+# Dependencies
+node_modules/
+
+# Secrets
 *.key
 *.pem
 *.env
 secrets/*
 !secrets/.env.*.example
-
-# Windows Terminal settings (optional - if you don't want to track)
-# windows-terminal/settings.json
-
-# WSL configs (if not using)
-# wsl/
