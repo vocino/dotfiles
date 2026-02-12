@@ -3,10 +3,6 @@
     "openai-docs": {
       "url": "https://developers.openai.com/mcp"
     },
-    "fetch": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-fetch"]
-    },
     "filesystem": {
       "command": "npx",
       "args": [
@@ -14,6 +10,16 @@
         "@modelcontextprotocol/server-filesystem",
         "C:\\Users\\vocino"
       ]
+    },
+    "Cloudflare": {
+      "url": "https://docs.mcp.cloudflare.com/mcp",
+      "headers": {}
+    },
+    "github": {
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "${GITHUB_MCP_TOKEN}"
+      }
     }
   }
 }

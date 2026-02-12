@@ -26,7 +26,8 @@ param(
     [string[]]$AllowList = @(
         "CLOUDFLARE_ACCOUNT_ID",
         "CLOUDFLARE_API_TOKEN",
-        "GITHUB_TOKEN"
+        "GITHUB_TOKEN",
+        "GITHUB_MCP_TOKEN"
     )
 )
 

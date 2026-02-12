@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(test:*)",
+      "Bash(cmd.exe /c \"dir /b \"\"%APPDATA%\\\\Code\\\\User\\\\*.json\"\" 2>nul\")",
+      "Bash(powershell.exe:*)",
+      "Bash(xargs:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}
