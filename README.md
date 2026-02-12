@@ -46,11 +46,15 @@ dotfiles/
 │   └── .npmrc           # Global npm config (registry, auth, proxy)
 ├── windows-terminal/    # Windows Terminal settings
 │   └── settings.json
+├── winget/              # WinGet package manager configuration
+│   ├── settings.json    # WinGet behavior settings
+│   └── packages.json    # Curated list of dev tools & apps
 ├── wsl/                 # WSL-specific configs (if used)
 │   └── .bashrc
 ├── scripts/             # Installation and utility scripts
 │   ├── install.ps1      # Main bootstrap script
-│   └── sync-secrets.ps1 # Sync secrets to Windows user environment
+│   ├── sync-secrets.ps1 # Sync secrets to Windows user environment
+│   └── winget-packages.ps1 # Import/export WinGet packages
 ├── secrets/             # Local secrets (git-ignored)
 │   ├── .env.cloudflare.example  # Cloudflare API template
 │   ├── .env.github.example      # GitHub token template
@@ -86,6 +90,7 @@ The installer will:
 - **PowerShell**: Custom profile with aliases, functions, and automatic secrets loading (used when running PowerShell elsewhere, e.g. Windows Terminal).
 - **Git**: Global config, aliases, ignore patterns
 - **npm**: Global npm configuration (registry, auth, proxy settings)
+- **WinGet**: Package manager settings and curated package list for reproducible dev environment setup
 - **Secrets Management**: Service-organized dotenv files with automatic shell loading and Windows user env sync
 
 ### MCP Servers (Cursor)
@@ -125,7 +130,19 @@ Installation instructions for Dracula themes can be found at [draculatheme.com](
 .\scripts\install.ps1 -Force
 ```
 
-**Selective Install**: Use `-Only` to install specific configs. Available options: `vscode`, `cursor`, `powershell`, `git-bash`, `git`, `npm`, `windows-terminal`, `wsl`.
+**Selective Install**: Use `-Only` to install specific configs. Available options: `vscode`, `cursor`, `powershell`, `git-bash`, `git`, `npm`, `windows-terminal`, `winget`, `wsl`.
+
+### WinGet Packages
+
+The `winget/packages.json` file contains a curated list of dev tools and apps. Use the helper script to manage packages:
+
+```powershell
+# Install all packages from the curated list (skips already installed)
+.\scripts\winget-packages.ps1 import
+
+# Re-export current packages (overwrites packages.json - review afterward)
+.\scripts\winget-packages.ps1 export
+```
 
 ## Updating
 
@@ -353,6 +370,7 @@ Get-Item $env:USERPROFILE\.gitconfig | Select-Object LinkType, Target
 | Git Config | `%USERPROFILE%\.gitconfig` |
 | npm Config | `%USERPROFILE%\.npmrc` |
 | Windows Terminal | `%LOCALAPPDATA%\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json` |
+| WinGet Settings | `%LOCALAPPDATA%\Packages\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe\LocalState\settings.json` |
 | Secrets Directory | `%USERPROFILE%\dotfiles\secrets\` |
 | Secrets Examples | `%USERPROFILE%\dotfiles\secrets\.env.*.example` |
 

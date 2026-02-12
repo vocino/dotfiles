@@ -1,0 +1,32 @@
+{
+    "$schema": "https://aka.ms/winget-settings.schema.json",
+
+    "visual": {
+        "progressBar": "rainbow"
+    },
+
+    "installBehavior": {
+        "preferences": {
+            "scope": "user",
+            "locale": [ "en-US" ]
+        },
+        "skipDependencies": false,
+        "disableInstallNotes": false
+    },
+
+    "source": {
+        "autoUpdateIntervalInMinutes": 5
+    },
+
+    "telemetry": {
+        "disable": true
+    },
+
+    "logging": {
+        "level": "info"
+    },
+
+    "network": {
+        "downloader": "wininet"
+    }
+}

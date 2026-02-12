@@ -7,7 +7,7 @@
     repository. It supports selective installation and can be run multiple times safely.
 
 .PARAMETER Only
-    Install only specific configurations. Options: vscode, cursor, powershell, git-bash, git, npm, windows-terminal, wsl
+    Install only specific configurations. Options: vscode, cursor, powershell, git-bash, git, npm, windows-terminal, winget, wsl
 
 .PARAMETER Force
     Overwrite existing files without prompting.
@@ -118,6 +118,13 @@ $SymlinkMappings = @{
             Target = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
             Type = "File"
             RequiresAdmin = $true
+        }
+    )
+    "winget" = @(
+        @{
+            Source = Join-Path $RepoRoot "winget\settings.json"
+            Target = "$env:LOCALAPPDATA\Packages\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe\LocalState\settings.json"
+            Type = "File"
         }
     )
     "git-bash" = @(

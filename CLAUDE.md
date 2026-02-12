@@ -11,7 +11,7 @@ This is a personal dotfiles repository for Windows 11 Pro development environmen
 ### Installation System
 - **Main script**: `scripts/install.ps1` - Creates symlinks from system paths to repo files
 - **Symlink mappings**: Defined in `$SymlinkMappings` hashtable (lines 44-130 of install.ps1)
-- **Selective installation**: Use `-Only` parameter to install specific configs (vscode, cursor, powershell, git-bash, git, npm, windows-terminal, wsl)
+- **Selective installation**: Use `-Only` parameter to install specific configs (vscode, cursor, powershell, git-bash, git, npm, windows-terminal, winget, wsl)
 - **Auto-skipping**: git-bash and wsl configs are automatically skipped if directories/files don't exist
 
 ### Secrets Management
@@ -87,7 +87,7 @@ Get-Item $env:USERPROFILE\.gitconfig | Select-Object LinkType, Target
    - Verify `.gitignore` excludes `secrets/*` with exception for `!secrets/.env.*.example`
    - Keep tokens in `secrets/.env.*` files, not hardcoded in configs
 
-5. **Optional configs**: git-bash and wsl configs are optional and auto-skipped if missing. Other configs (vscode, cursor, powershell, git, npm, windows-terminal) are expected to exist.
+5. **Optional configs**: git-bash and wsl configs are optional and auto-skipped if missing. Other configs (vscode, cursor, powershell, git, npm, windows-terminal, winget) are expected to exist.
 
 ## Configuration Locations
 
@@ -105,6 +105,7 @@ Get-Item $env:USERPROFILE\.gitconfig | Select-Object LinkType, Target
 | Git config | `git/.gitconfig` | `%USERPROFILE%\.gitconfig` |
 | npm config | `npm/.npmrc` | `%USERPROFILE%\.npmrc` |
 | Windows Terminal | `windows-terminal/settings.json` | `%LOCALAPPDATA%\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json` |
+| WinGet settings | `winget/settings.json` | `%LOCALAPPDATA%\Packages\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe\LocalState\settings.json` |
 
 ## Theming
 
