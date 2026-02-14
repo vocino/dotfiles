@@ -11,7 +11,7 @@ This is a personal dotfiles repository for Windows 11 Pro development environmen
 ### Installation System
 - **Main script**: `scripts/install.ps1` - Creates symlinks from system paths to repo files
 - **Symlink mappings**: Defined in `$SymlinkMappings` hashtable (lines 44-130 of install.ps1)
-- **Selective installation**: Use `-Only` parameter to install specific configs (vscode, cursor, powershell, git-bash, git, npm, windows-terminal, winget, wsl)
+- **Selective installation**: Use `-Only` parameter to install specific configs (vscode, cursor, claude, powershell, git-bash, git, npm, windows-terminal, winget, wsl)
 - **Auto-skipping**: git-bash and wsl configs are automatically skipped if directories/files don't exist
 
 ### Secrets Management
@@ -33,6 +33,12 @@ This is a personal dotfiles repository for Windows 11 Pro development environmen
 - **Current servers**: openai-docs (HTTP), fetch (stdio/npx), filesystem (stdio/npx), Cloudflare (HTTP), github (HTTP)
 - **Environment variables**: MCP config uses `${VAR_NAME}` syntax for secrets (e.g., `${GITHUB_MCP_TOKEN}`)
 - **Setup**: Run `.\scripts\sync-secrets.ps1` to sync tokens to Windows user environment, then restart Cursor
+
+### Claude Code Configuration
+- **File**: `claude/settings.json` (symlinked to `%USERPROFILE%\.claude\settings.json`)
+- **Purpose**: Global user settings (model, plugins, permissions)
+- **Permissions**: Generous allow rules for autonomous hobby dev; destructive commands and secrets access denied
+- **Note**: `claude/` (tracked config) is distinct from `.claude/` (git-ignored project-local state)
 
 ## Key Commands
 
@@ -87,7 +93,7 @@ Get-Item $env:USERPROFILE\.gitconfig | Select-Object LinkType, Target
    - Verify `.gitignore` excludes `secrets/*` with exception for `!secrets/.env.*.example`
    - Keep tokens in `secrets/.env.*` files, not hardcoded in configs
 
-5. **Optional configs**: git-bash and wsl configs are optional and auto-skipped if missing. Other configs (vscode, cursor, powershell, git, npm, windows-terminal, winget) are expected to exist.
+5. **Optional configs**: git-bash and wsl configs are optional and auto-skipped if missing. Other configs (vscode, cursor, claude, powershell, git, npm, windows-terminal, winget) are expected to exist.
 
 ## Configuration Locations
 
@@ -97,6 +103,7 @@ Get-Item $env:USERPROFILE\.gitconfig | Select-Object LinkType, Target
 | Cursor keybindings | `cursor/keybindings.json` | `%APPDATA%\Cursor\User\keybindings.json` |
 | Cursor MCP | `cursor/mcp.json` | `%USERPROFILE%\.cursor\mcp.json` |
 | Cursor CLI config | `cursor/cli-config.json` | `%USERPROFILE%\.cursor\cli-config.json` |
+| Claude Code settings | `claude/settings.json` | `%USERPROFILE%\.claude\settings.json` |
 | VS Code settings | `vscode/settings.json` | `%APPDATA%\Code\User\settings.json` |
 | VS Code keybindings | `vscode/keybindings.json` | `%APPDATA%\Code\User\keybindings.json` |
 | VS Code snippets | `vscode/snippets` | `%APPDATA%\Code\User\snippets` |

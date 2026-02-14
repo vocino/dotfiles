@@ -11,7 +11,7 @@ desktop.ini
 *~
 
 # Claude Code (machine-specific local state)
-.claude/settings.local.json
+.claude/
 .context/
 
 # Temporary files

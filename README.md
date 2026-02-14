@@ -29,6 +29,8 @@ dotfiles/
 │   ├── cli-config.json  # Cursor CLI configuration (agent modes, permissions)
 │   ├── snippets/        # Custom code snippets (if used)
 │   └── rules/           # Global cursor rules
+├── claude/              # Claude Code global settings
+│   └── settings.json    # Model, plugins, and permission rules
 ├── vscode/              # VS Code configuration
 │   ├── settings.json    # VS Code settings
 │   ├── keybindings.json # Custom keyboard shortcuts
@@ -86,6 +88,7 @@ The installer will:
 
 - **VS Code**: Settings, keybindings, snippets
 - **Cursor IDE**: Settings, MCP servers, keybindings, CLI config, snippets, global rules. Cursor's default terminal is **Git Bash**.
+- **Claude Code**: Global settings with generous permissions for autonomous hobby development. Pre-approves file tools, web tools, and common dev commands; denies destructive operations and secrets access.
 - **Git Bash**: Custom profile (aliases, git/npm shortcuts, secrets loading, prompt). Used by Cursor's integrated terminal.
 - **PowerShell**: Custom profile with aliases, functions, and automatic secrets loading (used when running PowerShell elsewhere, e.g. Windows Terminal).
 - **Git**: Global config, aliases, ignore patterns
@@ -130,7 +133,7 @@ Installation instructions for Dracula themes can be found at [draculatheme.com](
 .\scripts\install.ps1 -Force
 ```
 
-**Selective Install**: Use `-Only` to install specific configs. Available options: `vscode`, `cursor`, `powershell`, `git-bash`, `git`, `npm`, `windows-terminal`, `winget`, `wsl`.
+**Selective Install**: Use `-Only` to install specific configs. Available options: `vscode`, `cursor`, `claude`, `powershell`, `git-bash`, `git`, `npm`, `windows-terminal`, `winget`, `wsl`.
 
 ### WinGet Packages
 
@@ -360,6 +363,7 @@ Get-Item $env:USERPROFILE\.gitconfig | Select-Object LinkType, Target
 | Cursor MCP | `%USERPROFILE%\.cursor\mcp.json` |
 | Cursor CLI Config | `%USERPROFILE%\.cursor\cli-config.json` |
 | Cursor Snippets | `%APPDATA%\Cursor\User\snippets\` |
+| Claude Code Settings | `%USERPROFILE%\.claude\settings.json` |
 | VS Code Settings | `%APPDATA%\Code\User\settings.json` |
 | VS Code Keybindings | `%APPDATA%\Code\User\keybindings.json` |
 | VS Code Snippets | `%APPDATA%\Code\User\snippets\` |

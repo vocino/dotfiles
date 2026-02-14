@@ -28,7 +28,7 @@
 - Installer: `scripts/install.ps1`.
 - Secrets sync: `scripts/sync-secrets.ps1`.
 - Env smoke test: `scripts/test-env.ps1`.
-- Config directories: `cursor/`, `powershell/`, `git-bash/`, `git/`, `npm/`, `windows-terminal/`.
+- Config directories: `cursor/`, `claude/`, `powershell/`, `git-bash/`, `git/`, `npm/`, `windows-terminal/`.
 - Optional directories: `git-bash/`, `wsl/` (installer skips when missing).
 
 ## Non-Negotiable Rules

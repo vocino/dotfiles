@@ -7,7 +7,7 @@
     repository. It supports selective installation and can be run multiple times safely.
 
 .PARAMETER Only
-    Install only specific configurations. Options: vscode, cursor, powershell, git-bash, git, npm, windows-terminal, winget, wsl
+    Install only specific configurations. Options: vscode, cursor, claude, powershell, git-bash, git, npm, windows-terminal, winget, wsl
 
 .PARAMETER Force
     Overwrite existing files without prompting.
@@ -67,6 +67,13 @@ $SymlinkMappings = @{
             Source = Join-Path $RepoRoot "cursor\snippets"
             Target = "$env:APPDATA\Cursor\User\snippets"
             Type = "Directory"
+        }
+    )
+    "claude" = @(
+        @{
+            Source = Join-Path $RepoRoot "claude\settings.json"
+            Target = "$env:USERPROFILE\.claude\settings.json"
+            Type = "File"
         }
     )
     "vscode" = @(
